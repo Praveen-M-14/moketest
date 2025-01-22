@@ -1,0 +1,45 @@
+{% extends 'moke/layouts/main.html' %}
+
+{% block title %}Test Results - {{ test.title }}{% endblock %}
+
+{% block content %}
+<div class="container pt-5">
+  <h1 class="my-4">{{ test.title }} - Results</h1>
+  <h3>Your Score: {{ score }} / {{ results|length }}</h3>
+  <div class="mt-4">
+    <h4>Review Your Answers:</h4>
+    {% for result in results %}
+      <div class="mb-4">
+        <p><strong>{{ result.question.text }}</strong></p>
+
+        {% if result.question.image %}
+          <img src="{{ result.question.image.url }}" alt="Question Image" style="max-width: 100%; height: auto;">
+        {% endif %}
+
+        <p>
+          <strong>Your Answer:</strong>
+          {% if result.user_answer %}
+            <span>{{ result.user_answer }}</span>
+          {% else %}
+            <span class="text-warning">No answer selected</span>
+          {% endif %}
+        </p>
+
+        <p>
+          <strong>Correct Answer:</strong> {{ result.correct_answer }}
+        </p>
+
+        {% if result.user_answer %}
+          {% if result.user_answer == result.correct_answer %}
+            <p class="text-success">Correct Answer!</p>
+          {% else %}
+            <p class="text-danger">Incorrect.</p>
+          {% endif %}
+        {% else %}
+          <p class="text-danger">No answer provided.</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'moke/layouts/main.html' %}
+
+{% block title %}Take Test - {{ test.title }}{% endblock %}
+
+{% block content %}
+<div class="container pt-5">
+  <h1 class="my-4">{{ test.title }}</h1>
+
+  <!-- Timer -->
+  <div id="timer" class="timer mb-4" style="font-size: 20px; color: rgb(246, 246, 248);"></div>
+
+  <form method="POST" id="test-form">
+    {% csrf_token %}
+
+    <!-- Question Section -->
+    <div id="question-container" class="mb-4">
+      <label for="question_{{ question.id }}" class="form-label">{{ question.text }}</label>
+
+      <!-- Display question image if available -->
+      {% if question.image %}
+      <div class="mt-3">
+        <img src="{{ question.image.url }}" alt="Question Image" style="max-width: 100%; height: auto;">
+      </div>
+      {% endif %}
+
+      {% if question.is_mcq %}
+        <!-- MCQ Question -->
+        {% for option in question.answers.all %}
+        <div class="form-check mt-2">
+          <input class="form-check-input" type="radio" name="answer" id="question_{{ question.id }}_{{ option.id }}" value="{{ option.id }}" {% if option.id == selected_answer_id %}checked{% endif %}>
+          <label class="form-check-label" for="question_{{ question.id }}_{{ option.id }}">
+            {{ option.text }}
+          </label>
+        </div>
+        {% endfor %}
+      {% else %}
+        <!-- Fill-in-the-blank Question -->
+        <input type="text" class="form-control mt-3" name="answer" id="question_{{ question.id }}" placeholder="Your answer here" value="{% if selected_answer_text %}{{ selected_answer_text }}{% endif %}">
+      {% endif %}
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="mt-3">
+      {% if current_index > 0 %}
+      <button type="submit" class="btn btn-secondary" name="previous">Previous</button>
+      {% endif %}
+      {% if current_index < total_questions|add:"-1" %}
+      <button type="submit" class="btn btn-primary" name="next">Next</button>
+      {% endif %}
+    </div>
+
+    <!-- Submit Button -->
+    <div class="mt-3">
+      <button type="submit" class="btn btn-success" id="submit-button" name="submit">Submit Test</button>
+    </div>
+
+    <!-- Hidden Input to Persist Timer -->
+    <input type="hidden" id="time-remaining" name="time_remaining" value="{{ time_remaining }}">
+  </form>
+</div>
+
+<!-- Timer JavaScript -->
+<script>
+  // Initialize timeRemaining variable
+  let timeRemaining = parseInt(document.getElementById('time-remaining').value);
+
+  // Timer DOM element
+  const timerElement = document.getElementById('timer');
+  const timeInput = document.getElementById('time-remaining');
+
+  function updateTimer() {
+    if (timeRemaining > 0) {
+      const minutes = Math.floor(timeRemaining / 60);
+      const seconds = timeRemaining % 60;
+      timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      timeRemaining--;
+      timeInput.value = timeRemaining; // Update hidden input value
+    } else {
+      clearInterval(timerInterval);
+      timerElement.textContent = "Time's up! Submitting...";
+      document.getElementById('test-form').submit(); // Auto-submit the form
+    }
+  }
+
+  // Start the timer
+  const timerInterval = setInterval(updateTimer, 1000);
+  updateTimer();
+
+  // Prevent duplicate submits
+  document.getElementById('test-form').addEventListener('submit', function () {
+    clearInterval(timerInterval); // Stop the timer
+  });
+  
+  document.getElementById('submit-button').addEventListener('click', function(event) {
+    const confirmation = confirm("Are you sure you want to submit the test?");
+    if (!confirmation) {
+      event.preventDefault(); // Prevent the form from being submitted
+    }
+  });
+</script>
+{% endblock %}

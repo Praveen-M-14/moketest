@@ -1,0 +1,262 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 0;
+    margin-top: 90px; /* This pushes the content below the navbar */
+}
+
+/* Main container styling */
+.container {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding-top: 20px; /* Padding to avoid content touching the top */
+    padding-left: 0px;
+}
+
+/* Header and Navigation */
+header {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+h1, h4 {
+    font-weight: bold;
+}
+
+h4 {
+    color: #333;
+}
+
+/* Form Styling */
+.form-label {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 10px;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    border-color: #007BFF;
+}
+
+.btn-primary {
+    background-color: #007BFF;
+    border-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.alert-info {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.alert-info .btn-close {
+    color: #004085;
+}
+
+.text-danger {
+    color: red;
+}
+
+.my-2 {
+    margin: 20px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .col-md-6 {
+        width: 100%;
+    }
+
+    .navbar {
+        padding: 10px 0; /* Ensure the navbar is not too tall on mobile */
+    }
+
+    body {
+        margin-top: 90px; /* Adjust the top margin for mobile views with fixed navbar */
+    }
+}
+
+/* Additional styling for specific page elements */
+.test-description {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.test-question {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.test-question img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-top: 10px;
+}
+
+.test-results {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Improve accessibility */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: #007BFF;
+}
+
+/* Navbar fixed top adjustments */
+.navbar {
+    z-index: 1000; /* Ensure navbar stays on top */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+.nav-link {
+    padding: 10px 15px;
+    font-size: 16px;
+}
+
+/* Mobile View Adjustments */
+@media (max-width: 576px) {
+    .navbar-nav {
+        text-align: center;
+    }
+
+    .nav-link {
+        font-size: 14px;
+    }
+}
+.timer {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: white;
+    background-color: #5225f4; /* Green background at the start */
+    padding: 15px 30px;
+    border-radius: 8px;
+    display: inline-block;
+    text-align: center;
+    font-size: 2rem;
+    width: 120px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.5s ease;
+
+    position: fixed; /* Keeps it static in the viewport */
+    top: 0px; /* Distance from the top of the page */
+    right: 20px; /* Distance from the right edge of the page */
+    z-index: 1000; 
+  }
+  
+  /* When the timer is running out (less than or equal to 1 minute) */
+  .timer.running {
+    background-color: #ffc107; /* Yellow when the time is running out */
+  }
+  
+  /* When the time is up */
+  .timer.time-up {
+    background-color: #dc3545; /* Red when time is up */
+  }
+  
+  /* Initial state when the timer starts */
+  .timer.start {
+    background-color: #fbfbfb; /* Green at the start */
+  }
+  
+  /* Adjust timer on smaller screens */
+  @media (max-width: 768px) {
+    .timer {
+      font-size: 1.5rem;
+      width: 100px; /* Adjust the width for smaller screens */
+    }
+  }
+
+
+  #calculatorBody {
+    max-width: 200px;
+    margin: 0 auto;
+    border-radius: 8px;
+  }
+
+  .calculator-buttons {
+    display: flex;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .calculator-buttons button {
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .calculator-buttons button:hover {
+    background-color: #f0f0f0;
+  }
+
+  .calculator-display {
+    margin-bottom: 10px;
+  }
+
+  #calcDisplay {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    text-align: right;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }

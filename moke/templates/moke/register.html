@@ -1,0 +1,56 @@
+{% extends 'moke/layouts/main.html' %}
+{% block title %}
+SCBT GATE Mock Test | Registration
+{% endblock title %}
+
+{% block content %}
+<section style="min-height: 600px;">
+   <div class="container" style="margin-top: 70px;">
+     <div class="row">
+       <div class="col-12">
+         <h4 class="mb-3">Registration Page</h4>
+         <hr style="border-color: #b8bfc2;">
+         {% include 'moke/inc/message.html' %}
+       </div>
+     </div>
+     <section class="py-4 my-5">
+       <div class="container">
+         <div class="row">
+           <div class="col-md-6 col-12">
+             <form method="post" action="" novalidate>
+               {% csrf_token %}
+               <!-- Hidden Username Field -->
+               <div style="display: none;">
+                 {{ form.username }}
+               </div>
+               <div class="mb-4">
+                 <label for="id_email" class="form-label">Email</label>
+                 {{ form.email }}
+                 {% if form.errors.email %}
+                   <div class="text-danger">{{ form.errors.email|join:", " }}</div>
+                 {% endif %}
+               </div>
+               <div class="mb-4">
+                 <label for="id_password1" class="form-label">Password</label>
+                 {{ form.password1 }}
+                 {% if form.errors.password1 %}
+                   <div class="text-danger">{{ form.errors.password1|join:", " }}</div>
+                 {% endif %}
+               </div>
+               <div class="mb-4">
+                 <label for="id_password2" class="form-label">Confirm Password</label>
+                 {{ form.password2 }}
+                 {% if form.errors.password2 %}
+                   <div class="text-danger">{{ form.errors.password2|join:", " }}</div>
+                 {% endif %}
+               </div>
+               <button type="submit" class="btn btn-primary">Register</button>
+             </form>
+             <p class="my-2">Existing user? <a href="{% url 'login' %}">Login</a></p>
+           </div>
+         </div>
+       </div>
+     </section>
+   </div>
+</section>
+{% endblock content %}

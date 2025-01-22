@@ -1,0 +1,78 @@
+{% extends 'test/take_test.html' %}
+
+{% block content %}
+<div class="container pt-5 d-flex">
+  <!-- Sidebar with Question Buttons -->
+  <div id="sidebar" class="me-4" style="width: 25%;">
+    <h3>Questions</h3>
+    <div id="question-buttons">
+      {% for i in 1|range:total_questions|add:1 %}
+      <button class="question-btn btn btn-danger mb-2" data-question="{{ i }}" data-status="not-answered">
+        Question {{ i }}
+      </button>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Main Test Content -->
+  <div id="test-content" style="width: 75%;">
+    {{ block.super }}
+  </div>
+</div>
+
+<!-- Modal for Marking Question Status -->
+<div id="markingModal" class="modal" tabindex="-1" aria-labelledby="markingModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Question Status</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Select the status for the question:</p>
+        <button class="btn btn-success mark-done" data-status="done">Mark as Done</button>
+        <button class="btn btn-warning mark-review" data-status="review">Mark for Review</button>
+        <button class="btn btn-danger mark-not-answered" data-status="not-answered">Not Answered</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+  const questionButtons = document.querySelectorAll(".question-btn");
+  const markingModal = document.getElementById("markingModal");
+  let currentQuestionButton = null;
+
+  questionButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      currentQuestionButton = e.target;
+      const modal = new bootstrap.Modal(markingModal);
+      modal.show();
+    });
+  });
+
+  document.querySelector(".mark-done").addEventListener("click", () => {
+    updateQuestionStatus("done", "btn-success");
+  });
+
+  document.querySelector(".mark-review").addEventListener("click", () => {
+    updateQuestionStatus("review", "btn-warning");
+  });
+
+  document.querySelector(".mark-not-answered").addEventListener("click", () => {
+    updateQuestionStatus("not-answered", "btn-danger");
+  });
+
+  function updateQuestionStatus(status, btnClass) {
+    if (currentQuestionButton) {
+      currentQuestionButton.dataset.status = status;
+      currentQuestionButton.className = `question-btn btn ${btnClass} mb-2`;
+      const modal = bootstrap.Modal.getInstance(markingModal);
+      modal.hide();
+    }
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,29 @@
+<!-- test_list.html -->
+
+{% extends 'moke/layouts/main.html' %}
+
+{% block title %}
+Available Tests | SCBT GATE Mock Test
+{% endblock %}
+
+{% block content %}
+<section class="container" style="margin-top: 70px;">
+  <h4 class="mb-3">Available Tests</h4>
+  <hr>
+  <div class="row">
+    {% for test in tests %}
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">{{ test.title }}</h5>  <!-- Display the test title here -->
+            <p class="card-text">{{ test.description }}</p>
+            <a href="{% url 'take_test' test.id %}" class="btn btn-primary">Take Test</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No tests available at the moment.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

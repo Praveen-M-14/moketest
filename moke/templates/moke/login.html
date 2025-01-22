@@ -1,0 +1,54 @@
+{% extends 'moke/layouts/main.html' %}
+
+{% block title %}
+Login | SCBT GATE Mock Test
+{% endblock %}
+
+{% block content %}
+<section style="min-height: 600px;">
+  <div class="container" style="margin-top: 70px;">
+    <div class="row">
+      <div class="col-12">
+        <h4 class="mb-3">Login Page</h4>
+        <hr style="border-color: #b8bfc2;">
+        {% include 'moke/inc/message.html' %}
+      </div>
+    </div>
+    <section class="py-4 my-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <form method="POST" action="{% url 'login' %}">
+              {% csrf_token %}
+              <div class="mb-4">
+                <label for="id_username" class="form-label">Email (Username)</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                  <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                      <p>{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="mb-4">
+                <label for="id_password" class="form-label">Password</label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                  <div class="invalid-feedback">
+                    {% for error in form.password.errors %}
+                      <p>{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <p class="my-2">New user? <a href="{% url 'register' %}">Register</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+{% endblock %}
